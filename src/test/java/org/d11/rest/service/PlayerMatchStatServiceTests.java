@@ -18,6 +18,7 @@ import org.d11.rest.Tags;
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.repository.PlayerMatchStatRepository;
+import org.d11.rest.service.mapper.*;
 import org.d11.rest.util.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;

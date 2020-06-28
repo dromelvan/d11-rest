@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.d11.rest.Tags;
 import org.d11.rest.api.model.CardDTO;
 import org.d11.rest.api.model.CardType;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

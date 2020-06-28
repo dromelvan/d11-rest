@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
+import org.d11.rest.service.mapper.*;
 import org.d11.rest.util.*;
 
 public class DTOAssertions {

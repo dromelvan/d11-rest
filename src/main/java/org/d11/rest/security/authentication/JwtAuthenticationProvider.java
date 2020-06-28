@@ -3,7 +3,7 @@ package org.d11.rest.security.authentication;
 import org.d11.rest.api.model.UserDTO;
 import org.d11.rest.model.jpa.User;
 import org.d11.rest.repository.UserRepository;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.d11.rest.util.JWT;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,10 @@
-package org.d11.rest.util;
+package org.d11.rest.service.mapper;
 
 import java.util.*;
 
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.PlayerMatchStat;
+import org.d11.rest.util.PlayerMatchStats;
 import org.modelmapper.*;
 
 import com.google.common.collect.ComparisonChain;

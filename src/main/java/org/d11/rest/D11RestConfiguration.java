@@ -2,7 +2,7 @@ package org.d11.rest;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;

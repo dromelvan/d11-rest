@@ -17,7 +17,7 @@ import org.d11.rest.model.D11RestMock;
 import org.d11.rest.model.jpa.User;
 import org.d11.rest.repository.UserRepository;
 import org.d11.rest.security.authentication.D11RestAuthentication;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

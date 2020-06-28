@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import org.d11.rest.api.model.D11RestApiDTO;
 import org.d11.rest.model.jpa.D11RestEntity;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.d11.rest.util.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

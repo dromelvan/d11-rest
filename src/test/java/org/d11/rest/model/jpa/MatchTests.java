@@ -23,7 +23,7 @@ import org.d11.rest.Tags;
 import org.d11.rest.api.model.MatchDTO;
 import org.d11.rest.api.model.MatchMatchEventsDTO;
 import org.d11.rest.api.model.Status;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

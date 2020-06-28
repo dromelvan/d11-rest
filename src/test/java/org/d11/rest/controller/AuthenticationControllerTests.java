@@ -15,7 +15,7 @@ import org.d11.rest.security.AuthenticationRequest;
 import org.d11.rest.security.AuthenticationResponse;
 import org.d11.rest.security.authentication.D11RestAuthentication;
 import org.d11.rest.service.AuthenticationService;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

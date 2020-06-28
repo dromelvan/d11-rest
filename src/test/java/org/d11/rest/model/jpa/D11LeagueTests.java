@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.d11.rest.Tags;
 import org.d11.rest.api.model.D11LeagueDTO;
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.*;
 import org.modelmapper.ModelMapper;
 

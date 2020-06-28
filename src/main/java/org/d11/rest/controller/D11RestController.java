@@ -1,6 +1,6 @@
 package org.d11.rest.controller;
 
-import org.d11.rest.util.D11RestModelMapper;
+import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.modelmapper.ModelMapper;
 
 public class D11RestController {
