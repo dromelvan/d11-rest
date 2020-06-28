@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.d11.rest.model.jpa.MatchDay;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 public interface MatchDayRepository extends D11RestRepository<MatchDay> {

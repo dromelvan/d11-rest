@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.d11.rest.api.model.D11RestApiDTO;
 import org.d11.rest.model.jpa.D11RestEntity;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.d11.rest.repository.*;
 import org.d11.rest.util.NotFoundException;
 import org.springframework.data.domain.Sort;

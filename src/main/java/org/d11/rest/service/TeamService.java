@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.d11.rest.api.model.TeamDTO;
 import org.d11.rest.model.jpa.Team;
-import org.d11.rest.repository.EntityId;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.d11.rest.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

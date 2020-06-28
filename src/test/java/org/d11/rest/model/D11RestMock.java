@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
-import org.d11.rest.repository.EntityId;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.d11.rest.security.Role;
 import org.d11.rest.util.JWT;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

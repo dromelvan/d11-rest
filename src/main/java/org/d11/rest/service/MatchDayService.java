@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.d11.rest.api.model.MatchDayDTO;
 import org.d11.rest.model.jpa.MatchDay;
-import org.d11.rest.repository.EntityId;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.d11.rest.repository.MatchDayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

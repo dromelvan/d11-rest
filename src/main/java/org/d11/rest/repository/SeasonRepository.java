@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.d11.rest.model.jpa.Season;
+import org.d11.rest.model.jpa.projection.EntityId;
 
 public interface SeasonRepository extends D11RestRepository<Season> {
 

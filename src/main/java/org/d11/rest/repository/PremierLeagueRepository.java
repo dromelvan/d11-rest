@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.d11.rest.model.jpa.PremierLeague;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 public interface PremierLeagueRepository extends D11RestRepository<PremierLeague> {

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.d11.rest.api.model.SeasonDTO;
 import org.d11.rest.model.jpa.Season;
-import org.d11.rest.repository.EntityId;
+import org.d11.rest.model.jpa.projection.EntityId;
 import org.d11.rest.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
