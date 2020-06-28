@@ -11,8 +11,8 @@ public class D11RestModelMapper extends ModelMapper {
     public D11RestModelMapper() {
         final D11RestModelMapper modelMapper = this;
         addConverter(new LinksConverter());
-        // TODO: Try to make this work without passing the modelmapper to the converter.
-        addConverter(new PlayerMatchStatsByD11TeamPositionConverter(this));
+        // TODO: Try to make this work without passing the modelmapper to the converter.       
+        addConverter(new PlayerMatchStatsByD11TeamIdPositionConverter(this));               
 
         addMappings(new PropertyMap<PremierLeague, PremierLeagueDTO>() {
             @Override
@@ -35,7 +35,7 @@ public class D11RestModelMapper extends ModelMapper {
         addMappings(new PropertyMap<Match, MatchMatchStatsDTO>() {
             @Override
             protected void configure() {
-                using(new PlayerMatchStatsByTeamPositionConverter(modelMapper)).map(source.getPlayerMatchStats()).setPlayerMatchStats(null);
+                using(new PlayerMatchStatsByTeamIdPositionConverter(modelMapper)).map(source.getPlayerMatchStats()).setPlayerMatchStats(null);
             }
         });
         addMappings(new PropertyMap<D11League, D11LeagueDTO>() {

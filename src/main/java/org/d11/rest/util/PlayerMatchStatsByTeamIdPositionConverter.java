@@ -8,24 +8,24 @@ import org.modelmapper.*;
 
 import com.google.common.collect.ComparisonChain;
 
-public abstract class PlayerMatchStatsByPositionConverter<T extends PlayerMatchStatsByPositionDTO> extends AbstractConverter<PlayerMatchStats, T> implements Comparator<PlayerMatchStat> {
+public class PlayerMatchStatsByTeamIdPositionConverter extends AbstractConverter<List<PlayerMatchStat>, PlayerMatchStatsByTeamIdPositionDTO> implements Comparator<PlayerMatchStat> {
 
     private ModelMapper modelMapper;
 
-    public PlayerMatchStatsByPositionConverter(ModelMapper modelMapper) {
+    public PlayerMatchStatsByTeamIdPositionConverter(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
     @Override
-    protected T convert(PlayerMatchStats playerMatchStats) {
+    public PlayerMatchStatsByTeamIdPositionDTO convert(List<PlayerMatchStat> playerMatchStats) {
         Collections.sort(playerMatchStats, this);
-        T playerMatchStatsByPosition = createPlayerMatchStatsByPosition();
+        PlayerMatchStatsByTeamIdPositionDTO playerMatchStatsByTeamIdPositionDTO = new PlayerMatchStatsByTeamIdPositionDTO();
         for (PlayerMatchStat playerMatchStat : playerMatchStats) {
             if (playerMatchStat.getLineup() > 0) {
-                Map<String, List<PlayerMatchStatDetailsDTO>> positionMap = playerMatchStatsByPosition.get(getRootKey(playerMatchStat));
+                Map<String, List<PlayerMatchStatDetailsDTO>> positionMap = playerMatchStatsByTeamIdPositionDTO.get(playerMatchStat.getTeam().getId());
                 if (positionMap == null) {
                     positionMap = new LinkedHashMap<String, List<PlayerMatchStatDetailsDTO>>();
-                    playerMatchStatsByPosition.put(getRootKey(playerMatchStat), positionMap);
+                    playerMatchStatsByTeamIdPositionDTO.put(playerMatchStat.getTeam().getId(), positionMap);
                 }
                 List<PlayerMatchStatDetailsDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
                 if (positionList == null) {
@@ -35,12 +35,8 @@ public abstract class PlayerMatchStatsByPositionConverter<T extends PlayerMatchS
                 positionList.add(this.modelMapper.map(playerMatchStat, PlayerMatchStatDetailsDTO.class));
             }
         }
-        return playerMatchStatsByPosition;
+        return playerMatchStatsByTeamIdPositionDTO;
     }
-    
-    protected abstract Long getRootKey(PlayerMatchStat playerMatchStat);
-    
-    protected abstract T createPlayerMatchStatsByPosition();
     
     @Override
     public int compare(PlayerMatchStat playerMatchStat, PlayerMatchStat playerMatchStat2) {

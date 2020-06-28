@@ -34,7 +34,7 @@ public class PlayerMatchStatController extends RepositoryController<PlayerMatchS
     }
 
     @GetMapping(Endpoint.PLAYER_MATCH_STAT_BY_D11_MATCH_ID)
-    public ResponseEntity<PlayerMatchStatsByD11TeamIdPositionDTO> findByD11MatchDayId(@PathVariable("id") long id) {
+    public ResponseEntity<PlayerMatchStatsByD11TeamIdPositionDTO> findByD11MatchId(@PathVariable("id") long id) {
         PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = getRepositoryService().findByD11MatchId(id);
         return ResponseEntity.ok(playerMatchStatsByD11TeamIdPositionDTO);
     }

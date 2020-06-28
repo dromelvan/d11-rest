@@ -17,6 +17,9 @@ public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, P
 
     public PlayerMatchStatsByD11TeamIdPositionDTO findByD11MatchId(long d11MatchId) {
         PlayerMatchStats playerMatchStats = getJpaRepository().findByD11MatchId(d11MatchId);
+        if(playerMatchStats == null) {
+            playerMatchStats = new PlayerMatchStats();
+        }
         return map(playerMatchStats, PlayerMatchStatsByD11TeamIdPositionDTO.class);
     }
     
