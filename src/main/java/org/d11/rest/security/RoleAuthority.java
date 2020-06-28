@@ -1,12 +1,12 @@
 package org.d11.rest.security;
 
-import org.d11.rest.D11RestVersion;
+import org.d11.rest.api.D11RestApiVersion;
 import org.springframework.security.core.GrantedAuthority;
 
 public class RoleAuthority implements GrantedAuthority {
 
     private final Role role;
-    private static final long serialVersionUID = D11RestVersion.SERIAL_VERSION_UID;
+    private static final long serialVersionUID = D11RestApiVersion.SERIAL_VERSION_UID;
 
     public RoleAuthority(Role role) {
         this.role = role;
