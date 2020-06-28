@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class PlayerMatchStatController extends RepositoryController<PlayerMatchStatDTO, PlayerMatchStatService> {
+public class PlayerMatchStatController extends RepositoryController<PlayerMatchStatBaseDTO, PlayerMatchStatService> {
 
     @Autowired
     public PlayerMatchStatController(PlayerMatchStatService playerMatchStatService) {
@@ -19,7 +19,7 @@ public class PlayerMatchStatController extends RepositoryController<PlayerMatchS
     }
 
     @GetMapping(Endpoint.PLAYER_MATCH_STATS)
-    public ResponseEntity<List<PlayerMatchStatDTO>> findAll() {
+    public ResponseEntity<List<PlayerMatchStatBaseDTO>> findAll() {
         return super.findAll();
     }
 
@@ -29,7 +29,7 @@ public class PlayerMatchStatController extends RepositoryController<PlayerMatchS
     }
 
     @GetMapping(Endpoint.PLAYER_MATCH_STAT)
-    public ResponseEntity<PlayerMatchStatDTO> findById(@PathVariable("id") long id) {
+    public ResponseEntity<PlayerMatchStatBaseDTO> findById(@PathVariable("id") long id) {
         return super.findById(id);
     }
 

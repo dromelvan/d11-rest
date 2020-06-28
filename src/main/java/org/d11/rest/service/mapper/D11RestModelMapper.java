@@ -108,7 +108,7 @@ public class D11RestModelMapper extends ModelMapper {
                 skip().setD11MatchDay(null);
             }
         });
-        addMappings(new PropertyMap<PlayerMatchStatDTO, PlayerMatchStat>() {
+        addMappings(new PropertyMap<PlayerMatchStatBaseDTO, PlayerMatchStat>() {
             @Override
             protected void configure() {
                 skip().setPlayer(null);

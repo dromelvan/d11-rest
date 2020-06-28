@@ -22,17 +22,17 @@ public class PlayerMatchStatsByTeamIdPositionConverter extends AbstractConverter
         PlayerMatchStatsByTeamIdPositionDTO playerMatchStatsByTeamIdPositionDTO = new PlayerMatchStatsByTeamIdPositionDTO();
         for (PlayerMatchStat playerMatchStat : playerMatchStats) {
             if (playerMatchStat.getLineup() > 0) {
-                Map<String, List<PlayerMatchStatDetailsDTO>> positionMap = playerMatchStatsByTeamIdPositionDTO.get(playerMatchStat.getTeam().getId());
+                Map<String, List<PlayerMatchStatDTO>> positionMap = playerMatchStatsByTeamIdPositionDTO.get(playerMatchStat.getTeam().getId());
                 if (positionMap == null) {
-                    positionMap = new LinkedHashMap<String, List<PlayerMatchStatDetailsDTO>>();
+                    positionMap = new LinkedHashMap<String, List<PlayerMatchStatDTO>>();
                     playerMatchStatsByTeamIdPositionDTO.put(playerMatchStat.getTeam().getId(), positionMap);
                 }
-                List<PlayerMatchStatDetailsDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
+                List<PlayerMatchStatDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
                 if (positionList == null) {
                     positionList = new ArrayList<>();
                     positionMap.put(playerMatchStat.getPosition().getName(), positionList);
                 }
-                positionList.add(this.modelMapper.map(playerMatchStat, PlayerMatchStatDetailsDTO.class));
+                positionList.add(this.modelMapper.map(playerMatchStat, PlayerMatchStatDTO.class));
             }
         }
         return playerMatchStatsByTeamIdPositionDTO;

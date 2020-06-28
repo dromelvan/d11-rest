@@ -25,7 +25,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @Tag(Tags.UNIT_TEST)
 @TestInstance(Lifecycle.PER_CLASS)
-public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMatchStat, PlayerMatchStatDTO, PlayerMatchStatRepository, PlayerMatchStatService> {
+public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMatchStat, PlayerMatchStatBaseDTO, PlayerMatchStatRepository, PlayerMatchStatService> {
 
 	@BeforeAll
 	public void beforeAll() {
@@ -66,11 +66,11 @@ public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMa
         for(Long d11TeamId : expected.keySet()) {
             assertEquals(expected.get(d11TeamId).keySet(), result.get(d11TeamId).keySet());
             for(String position : expected.get(d11TeamId).keySet()) {
-                List<PlayerMatchStatDetailsDTO> expectedPlayerMatchStatDetailsDTO = expected.get(d11TeamId).get(position);
-                List<PlayerMatchStatDetailsDTO> resultPlayerMatchStatDetailsDTO = result.get(d11TeamId).get(position);
-                for(int i = 0; i < expectedPlayerMatchStatDetailsDTO.size(); ++i) {
+                List<PlayerMatchStatDTO> expectedPlayerMatchStatDTO = expected.get(d11TeamId).get(position);
+                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = result.get(d11TeamId).get(position);
+                for(int i = 0; i < expectedPlayerMatchStatDTO.size(); ++i) {
                     // It's ok to just check id here, the rest is checked in other tests.
-                    assertEquals(expectedPlayerMatchStatDetailsDTO.get(i).getId(), resultPlayerMatchStatDetailsDTO.get(i).getId());
+                    assertEquals(expectedPlayerMatchStatDTO.get(i).getId(), resultPlayerMatchStatDTO.get(i).getId());
                 }
             }
         }

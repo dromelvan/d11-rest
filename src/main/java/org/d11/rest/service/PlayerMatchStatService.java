@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, PlayerMatchStatDTO, PlayerMatchStatRepository> {
+public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, PlayerMatchStatBaseDTO, PlayerMatchStatRepository> {
 
     @Autowired
     public PlayerMatchStatService(PlayerMatchStatRepository playerMatchStatRepository) {
@@ -24,8 +24,8 @@ public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, P
     }
     
     @Override
-    protected Class<PlayerMatchStatDTO> getDTOClass() {
-        return PlayerMatchStatDTO.class;
+    protected Class<PlayerMatchStatBaseDTO> getDTOClass() {
+        return PlayerMatchStatBaseDTO.class;
     }
     
 }

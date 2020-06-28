@@ -13,7 +13,7 @@ import org.d11.rest.controller.PlayerMatchStatController;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.repository.*;
 import org.d11.rest.service.mapper.*;
-import org.d11.rest.util.*;
+import org.d11.rest.util.PlayerMatchStats;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,16 +21,16 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<PlayerMatchStat, PlayerMatchStatDTO, PlayerMatchStatController> {
+public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<PlayerMatchStat, PlayerMatchStatBaseDTO, PlayerMatchStatController> {
 
 	@Override
-	protected PlayerMatchStatDTO readValue(MvcResult mvcResult) throws Exception {
-		return readValue(mvcResult, new TypeReference<PlayerMatchStatDTO>() {});
+	protected PlayerMatchStatBaseDTO readValue(MvcResult mvcResult) throws Exception {
+		return readValue(mvcResult, new TypeReference<PlayerMatchStatBaseDTO>() {});
 	}
 	
 	@Override
-	protected List<PlayerMatchStatDTO> readValues(MvcResult mvcResult) throws Exception {
-		return readValue(mvcResult, new TypeReference<List<PlayerMatchStatDTO>>() {});
+	protected List<PlayerMatchStatBaseDTO> readValues(MvcResult mvcResult) throws Exception {
+		return readValue(mvcResult, new TypeReference<List<PlayerMatchStatBaseDTO>>() {});
 	}
 	
 	@BeforeEach
@@ -78,20 +78,20 @@ public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<Player
         playerMatchStats = getRepository(PlayerMatchStatRepository.class).saveAll(playerMatchStats);
 
         MvcResult mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_D11_MATCH_ID, d11Match.getId()), token(user));
+        PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = readValue(mvcResult, new TypeReference<PlayerMatchStatsByD11TeamIdPositionDTO>() {});
 
         PlayerMatchStats playerMatchStatsObject = new PlayerMatchStats();
         playerMatchStatsObject.addAll(playerMatchStats);        
-        PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = readValue(mvcResult, new TypeReference<PlayerMatchStatsByD11TeamIdPositionDTO>() {});
         PlayerMatchStatsByD11TeamIdPositionDTO expected = new PlayerMatchStatsByD11TeamIdPositionConverter(new D11RestModelMapper()).convert(playerMatchStatsObject);
 
         assertEquals(expected.keySet(), playerMatchStatsByD11TeamIdPositionDTO.keySet());
         for(Long d11TeamId : expected.keySet()) {
             assertEquals(expected.get(d11TeamId).keySet(), playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).keySet());
             for(String position : expected.get(d11TeamId).keySet()) {
-                List<PlayerMatchStatDetailsDTO> expectedPlayerMatchStatDetailsDTO = expected.get(d11TeamId).get(position);
-                List<PlayerMatchStatDetailsDTO> resultPlayerMatchStatDetailsDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
-                for(int i = 0; i < expectedPlayerMatchStatDetailsDTO.size(); ++i) {
-                    assertEquals(expectedPlayerMatchStatDetailsDTO.get(i).getId(), resultPlayerMatchStatDetailsDTO.get(i).getId());
+                List<PlayerMatchStatDTO> expectedPlayerMatchStatDTO = expected.get(d11TeamId).get(position);
+                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
+                for(int i = 0; i < expectedPlayerMatchStatDTO.size(); ++i) {
+                    assertEquals(expectedPlayerMatchStatDTO.get(i).getId(), resultPlayerMatchStatDTO.get(i).getId());
                 }
             }
         }    

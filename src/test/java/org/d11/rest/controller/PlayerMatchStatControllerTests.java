@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
 
 @Tag(Tags.UNIT_TEST)
 @TestInstance(Lifecycle.PER_CLASS)
-public class PlayerMatchStatControllerTests extends RepositoryControllerTests<PlayerMatchStat, PlayerMatchStatDTO, PlayerMatchStatController> {
+public class PlayerMatchStatControllerTests extends RepositoryControllerTests<PlayerMatchStat, PlayerMatchStatBaseDTO, PlayerMatchStatController> {
 
 	@BeforeAll
 	public void beforeAll() {
@@ -53,8 +53,8 @@ public class PlayerMatchStatControllerTests extends RepositoryControllerTests<Pl
 	}
 	
 	@Override
-	protected Class<PlayerMatchStatDTO> getDTOClass() {
-		return PlayerMatchStatDTO.class;
+	protected Class<PlayerMatchStatBaseDTO> getDTOClass() {
+		return PlayerMatchStatBaseDTO.class;
 	}
 
     @Test
@@ -74,10 +74,10 @@ public class PlayerMatchStatControllerTests extends RepositoryControllerTests<Pl
         for(Long d11TeamId : expected.keySet()) {
             assertEquals(expected.get(d11TeamId).keySet(), playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).keySet());
             for(String position : expected.get(d11TeamId).keySet()) {
-                List<PlayerMatchStatDetailsDTO> expectedPlayerMatchStatDetailsDTO = expected.get(d11TeamId).get(position);
-                List<PlayerMatchStatDetailsDTO> resultPlayerMatchStatDetailsDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
-                for(int i = 0; i < expectedPlayerMatchStatDetailsDTO.size(); ++i) {
-                    assertEquals(expectedPlayerMatchStatDetailsDTO.get(i).getId(), resultPlayerMatchStatDetailsDTO.get(i).getId());
+                List<PlayerMatchStatDTO> expectedPlayerMatchStatDTO = expected.get(d11TeamId).get(position);
+                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
+                for(int i = 0; i < expectedPlayerMatchStatDTO.size(); ++i) {
+                    assertEquals(expectedPlayerMatchStatDTO.get(i).getId(), resultPlayerMatchStatDTO.get(i).getId());
                 }
             }
         }

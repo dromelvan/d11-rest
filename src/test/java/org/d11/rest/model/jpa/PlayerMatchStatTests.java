@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.d11.rest.Tags;
-import org.d11.rest.api.model.PlayerMatchStatDTO;
+import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
 import org.d11.rest.service.mapper.D11RestModelMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -125,7 +125,7 @@ public class PlayerMatchStatTests extends PlayerStatTests {
 
 		ModelMapper modelMapper = new D11RestModelMapper();
 		
-		PlayerMatchStatDTO playerMatchStatDTO = modelMapper.map(playerMatchStat, PlayerMatchStatDTO.class);
+		PlayerMatchStatBaseDTO playerMatchStatDTO = modelMapper.map(playerMatchStat, PlayerMatchStatBaseDTO.class);
 		assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
 		
 		PlayerMatchStat mappedPlayerMatchStat = new PlayerMatchStat();

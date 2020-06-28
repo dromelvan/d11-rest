@@ -23,17 +23,17 @@ public class PlayerMatchStatsByD11TeamIdPositionConverter extends AbstractConver
         PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = new PlayerMatchStatsByD11TeamIdPositionDTO();
         for (PlayerMatchStat playerMatchStat : playerMatchStats) {
             if (playerMatchStat.getLineup() > 0) {
-                Map<String, List<PlayerMatchStatDetailsDTO>> positionMap = playerMatchStatsByD11TeamIdPositionDTO.get(playerMatchStat.getD11Team().getId());
+                Map<String, List<PlayerMatchStatDTO>> positionMap = playerMatchStatsByD11TeamIdPositionDTO.get(playerMatchStat.getD11Team().getId());
                 if (positionMap == null) {
-                    positionMap = new LinkedHashMap<String, List<PlayerMatchStatDetailsDTO>>();
+                    positionMap = new LinkedHashMap<String, List<PlayerMatchStatDTO>>();
                     playerMatchStatsByD11TeamIdPositionDTO.put(playerMatchStat.getD11Team().getId(), positionMap);
                 }
-                List<PlayerMatchStatDetailsDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
+                List<PlayerMatchStatDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
                 if (positionList == null) {
                     positionList = new ArrayList<>();
                     positionMap.put(playerMatchStat.getPosition().getName(), positionList);
                 }
-                positionList.add(this.modelMapper.map(playerMatchStat, PlayerMatchStatDetailsDTO.class));
+                positionList.add(this.modelMapper.map(playerMatchStat, PlayerMatchStatDTO.class));
             }
         }
         return playerMatchStatsByD11TeamIdPositionDTO;

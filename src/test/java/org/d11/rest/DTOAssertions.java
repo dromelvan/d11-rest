@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.service.mapper.*;
-import org.d11.rest.util.*;
 
 public class DTOAssertions {
 
@@ -61,10 +60,10 @@ public class DTOAssertions {
             assertEqualsDTO((D11Match) d11RestEntity, (D11MatchDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof D11Match && d11RestApiDTO instanceof D11MatchBaseDTO) {
             assertEqualsDTO((D11Match) d11RestEntity, (D11MatchBaseDTO) d11RestApiDTO);
-        } else if(d11RestEntity instanceof PlayerMatchStat && d11RestApiDTO instanceof PlayerMatchStatDetailsDTO) {
-            assertEqualsDTO((PlayerMatchStat) d11RestEntity, (PlayerMatchStatDetailsDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof PlayerMatchStat && d11RestApiDTO instanceof PlayerMatchStatDTO) {
             assertEqualsDTO((PlayerMatchStat) d11RestEntity, (PlayerMatchStatDTO) d11RestApiDTO);
+        } else if(d11RestEntity instanceof PlayerMatchStat && d11RestApiDTO instanceof PlayerMatchStatBaseDTO) {
+            assertEqualsDTO((PlayerMatchStat) d11RestEntity, (PlayerMatchStatBaseDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof Goal && d11RestApiDTO instanceof GoalDTO) {
             assertEqualsDTO((Goal) d11RestEntity, (GoalDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof Card && d11RestApiDTO instanceof CardDTO) {
@@ -302,7 +301,7 @@ public class DTOAssertions {
         assertEqualsDTO(d11Match.getD11MatchDay(), d11MatchDTO.getD11MatchDay());
     }
 
-    public static void assertEqualsDTO(PlayerMatchStat playerMatchStat, PlayerMatchStatDTO playerMatchStatDTO) {
+    public static void assertEqualsDTO(PlayerMatchStat playerMatchStat, PlayerMatchStatBaseDTO playerMatchStatDTO) {
         assertNotNull(playerMatchStatDTO);
         assertEquals(playerMatchStat.getId(), playerMatchStatDTO.getId());
         assertEquals(playerMatchStat.getPlayedPosition(), playerMatchStatDTO.getPlayedPosition());
@@ -321,12 +320,12 @@ public class DTOAssertions {
         assertEquals(playerMatchStat.getPoints(), playerMatchStatDTO.getPoints());
     }
 
-    public static void assertEqualsDTO(PlayerMatchStat playerMatchStat, PlayerMatchStatDetailsDTO playerMatchStatDetailsDTO) {
-        assertEqualsDTO(playerMatchStat, (PlayerMatchStatDTO) playerMatchStatDetailsDTO);
-        assertEqualsDTO(playerMatchStat.getPlayer(), playerMatchStatDetailsDTO.getPlayer());
-        assertEqualsDTO(playerMatchStat.getTeam(), playerMatchStatDetailsDTO.getTeam());
-        assertEqualsDTO(playerMatchStat.getD11Team(), playerMatchStatDetailsDTO.getD11Team());
-        assertEqualsDTO(playerMatchStat.getPosition(), playerMatchStatDetailsDTO.getPosition());
+    public static void assertEqualsDTO(PlayerMatchStat playerMatchStat, PlayerMatchStatDTO playerMatchStatDTO) {
+        assertEqualsDTO(playerMatchStat, (PlayerMatchStatBaseDTO) playerMatchStatDTO);
+        assertEqualsDTO(playerMatchStat.getPlayer(), playerMatchStatDTO.getPlayer());
+        assertEqualsDTO(playerMatchStat.getTeam(), playerMatchStatDTO.getTeam());
+        assertEqualsDTO(playerMatchStat.getD11Team(), playerMatchStatDTO.getD11Team());
+        assertEqualsDTO(playerMatchStat.getPosition(), playerMatchStatDTO.getPosition());
     }
 
     public static void assertEqualsDTO(MatchEvent matchEvent, MatchEventDTO matchEventDTO) {
