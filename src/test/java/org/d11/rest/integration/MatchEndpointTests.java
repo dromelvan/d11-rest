@@ -7,9 +7,7 @@ import org.d11.rest.api.model.MatchDTO;
 import org.d11.rest.controller.MatchController;
 import org.d11.rest.model.jpa.Match;
 import org.d11.rest.repository.MatchRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -52,11 +50,6 @@ public class MatchEndpointTests extends SeasonMockEndpointTests<Match, MatchDTO,
 	@Test
 	public void findMatchEventsById() throws Exception {
 		super.findById(Endpoint.MATCH_EVENTS);
-	}
-
-	@Test
-	public void findMatchStatsById() throws Exception {
-		super.findById(Endpoint.MATCH_STATS);
 	}
 	
 }

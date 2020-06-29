@@ -13,18 +13,11 @@ import static org.mockito.Mockito.mock;
 import java.util.List;
 
 import org.d11.rest.Tags;
-import org.d11.rest.api.model.MatchDTO;
-import org.d11.rest.api.model.MatchMatchEventsDTO;
-import org.d11.rest.api.model.MatchMatchStatsDTO;
-import org.d11.rest.model.jpa.Match;
-import org.d11.rest.model.jpa.MatchDay;
-import org.d11.rest.model.jpa.PremierLeague;
+import org.d11.rest.api.model.*;
+import org.d11.rest.model.jpa.*;
 import org.d11.rest.repository.MatchRepository;
 import org.d11.rest.util.NotFoundException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @Tag(Tags.UNIT_TEST)
@@ -58,17 +51,6 @@ public class MatchServiceTests extends RepositoryServiceTests<Match, MatchDTO, M
 		assertEqualsDTO(match, result);
 		
 		assertThrows(NotFoundException.class, () -> getRepositoryService().findMatchEventsById((long)-1));						
-	}
-
-	@Test
-	public void findMatchStatsById() {
-		Match match = getD11RestEntities().get(0);
-		MatchMatchStatsDTO result = getRepositoryService().findMatchStatsById(match.getId());
-		
-		assertNotNull(result);
-		assertEqualsDTO(match, result);
-		
-		assertThrows(NotFoundException.class, () -> getRepositoryService().findMatchStatsById((long)-1));						
 	}
 	
 }

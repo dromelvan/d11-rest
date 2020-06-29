@@ -13,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.d11.rest.Tags;
+import org.d11.rest.api.collection.*;
 import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
 import org.d11.rest.service.mapper.D11RestModelMapper;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.d11.rest.util.PlayerMatchStats;
+import org.junit.jupiter.api.*;
 import org.modelmapper.ModelMapper;
 
 @Tag(Tags.UNIT_TEST)
@@ -125,12 +126,12 @@ public class PlayerMatchStatTests extends PlayerStatTests {
 
 		ModelMapper modelMapper = new D11RestModelMapper();
 		
-		PlayerMatchStatBaseDTO playerMatchStatDTO = modelMapper.map(playerMatchStat, PlayerMatchStatBaseDTO.class);
-		assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
+		PlayerMatchStatBaseDTO playerMatchBaseStatDTO = modelMapper.map(playerMatchStat, PlayerMatchStatBaseDTO.class);
+		assertEqualsDTO(playerMatchStat, playerMatchBaseStatDTO);
 		
 		PlayerMatchStat mappedPlayerMatchStat = new PlayerMatchStat();
 		
-		modelMapper.map(playerMatchStatDTO, mappedPlayerMatchStat);
+		modelMapper.map(playerMatchBaseStatDTO, mappedPlayerMatchStat);
 		assertEquals(playerMatchStat.getId(), mappedPlayerMatchStat.getId());
 		assertEquals(playerMatchStat.getPlayedPosition(), mappedPlayerMatchStat.getPlayedPosition());		
 		assertEquals(playerMatchStat.getLineup(), mappedPlayerMatchStat.getLineup());		
@@ -150,7 +151,16 @@ public class PlayerMatchStatTests extends PlayerStatTests {
 		assertNull(mappedPlayerMatchStat.getMatch());
 		assertNull(mappedPlayerMatchStat.getTeam());
 		assertNull(mappedPlayerMatchStat.getD11Team());
-		assertNull(mappedPlayerMatchStat.getPosition());		
-	}
+		assertNull(mappedPlayerMatchStat.getPosition());
+		
+		PlayerMatchStats playerMatchStats = new PlayerMatchStats();
+		playerMatchStats.add(playerMatchStat);
+		
+		MatchPlayerMatchStatsDTO matchPlayerMatchStatsDTO = modelMapper.map(playerMatchStats, MatchPlayerMatchStatsDTO.class);
+		assertEqualsDTO(playerMatchStats, matchPlayerMatchStatsDTO);
+		
+        D11MatchPlayerMatchStatsDTO d11MatchPlayerMatchStatsDTO = modelMapper.map(playerMatchStats, D11MatchPlayerMatchStatsDTO.class);
+        assertEqualsDTO(playerMatchStats, d11MatchPlayerMatchStatsDTO);
+	}	
 	
 }

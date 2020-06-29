@@ -1,13 +1,12 @@
 package org.d11.rest.controller;
 
+import static org.d11.rest.DTOAssertions.assertEqualsDTO;
 import static org.d11.rest.model.D11RestMock.d11Team;
 import static org.d11.rest.model.D11RestMock.match;
 import static org.d11.rest.model.D11RestMock.player;
 import static org.d11.rest.model.D11RestMock.playerMatchStats;
 import static org.d11.rest.model.D11RestMock.position;
 import static org.d11.rest.model.D11RestMock.team;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,8 +14,8 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.d11.rest.Tags;
-import org.d11.rest.api.collection.D11MatchPlayerMatchStatsDTO;
-import org.d11.rest.api.model.*;
+import org.d11.rest.api.collection.*;
+import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.service.PlayerMatchStatService;
 import org.d11.rest.service.mapper.*;
@@ -59,32 +58,33 @@ public class PlayerMatchStatControllerTests extends RepositoryControllerTests<Pl
 	}
 
     @Test
+    public void findByMatchId() {
+        PlayerMatchStats playerMatchStats = new PlayerMatchStats(getD11RestEntities());
+        when(getRepositoryController().getRepositoryService().findByMatchId((long)1)).thenReturn(new MatchPlayerMatchStatsConverter(new D11RestModelMapper()).convert(playerMatchStats));
+        when(getRepositoryController().getRepositoryService().findByMatchId((long)-1)).thenReturn(new MatchPlayerMatchStatsDTO());
+                
+        ResponseEntity<MatchPlayerMatchStatsDTO> response = getRepositoryController().findByMatchId((long)1);
+        MatchPlayerMatchStatsDTO result = response.getBody();
+        assertEqualsDTO(playerMatchStats, result);
+                
+        response = getRepositoryController().findByMatchId((long)-1);
+        result = response.getBody();
+        assertTrue(result.isEmpty());
+    }
+	
+    @Test
     public void findByD11MatchId() {
-        PlayerMatchStats playerMatchStats = new PlayerMatchStats();
-        playerMatchStats.addAll(getD11RestEntities());
+        PlayerMatchStats playerMatchStats = new PlayerMatchStats(getD11RestEntities());
         when(getRepositoryController().getRepositoryService().findByD11MatchId((long)1)).thenReturn(new D11MatchPlayerMatchStatsConverter(new D11RestModelMapper()).convert(playerMatchStats));
         when(getRepositoryController().getRepositoryService().findByD11MatchId((long)-1)).thenReturn(new D11MatchPlayerMatchStatsDTO());
-        
+                
         ResponseEntity<D11MatchPlayerMatchStatsDTO> response = getRepositoryController().findByD11MatchId((long)1);
-        
-        D11MatchPlayerMatchStatsDTO playerMatchStatsByD11TeamIdPositionDTO = response.getBody();
-        
-        assertNotNull(playerMatchStatsByD11TeamIdPositionDTO);
-        D11MatchPlayerMatchStatsDTO expected = new D11MatchPlayerMatchStatsConverter(new D11RestModelMapper()).convert(playerMatchStats);
-        assertEquals(expected.keySet(), playerMatchStatsByD11TeamIdPositionDTO.keySet());
-        for(Long d11TeamId : expected.keySet()) {
-            assertEquals(expected.get(d11TeamId).keySet(), playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).keySet());
-            for(String position : expected.get(d11TeamId).keySet()) {
-                List<PlayerMatchStatDTO> expectedPlayerMatchStatDTO = expected.get(d11TeamId).get(position);
-                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
-                for(int i = 0; i < expectedPlayerMatchStatDTO.size(); ++i) {
-                    assertEquals(expectedPlayerMatchStatDTO.get(i).getId(), resultPlayerMatchStatDTO.get(i).getId());
-                }
-            }
-        }
-        
-        playerMatchStatsByD11TeamIdPositionDTO = getRepositoryController().findByD11MatchId((long)-1).getBody();
-        assertTrue(playerMatchStatsByD11TeamIdPositionDTO.isEmpty());
+        D11MatchPlayerMatchStatsDTO result = response.getBody();
+        assertEqualsDTO(playerMatchStats, result);
+                
+        response = getRepositoryController().findByD11MatchId((long)-1);
+        result = response.getBody();
+        assertTrue(result.isEmpty());
     }
 	
 }

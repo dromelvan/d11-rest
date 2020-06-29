@@ -2,9 +2,7 @@ package org.d11.rest.service;
 
 import java.util.Optional;
 
-import org.d11.rest.api.model.MatchDTO;
-import org.d11.rest.api.model.MatchMatchEventsDTO;
-import org.d11.rest.api.model.MatchMatchStatsDTO;
+import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.Match;
 import org.d11.rest.repository.MatchRepository;
 import org.d11.rest.util.NotFoundException;
@@ -33,19 +31,6 @@ public class MatchService extends RepositoryService<Match, MatchDTO, MatchReposi
             match.getCards().size();
             match.getSubstitutions().size();
             return map(match, MatchMatchEventsDTO.class);
-        }
-        throw new NotFoundException();
-    }
-
-    public MatchMatchStatsDTO findMatchStatsById(long id) {
-        Optional<Match> optional = getJpaRepository().findById(id);
-        if (optional.isPresent()) {
-            Match match = optional.get();
-            match.getPlayerMatchStats().size();
-            match.getGoals().size();
-            match.getCards().size();
-            match.getSubstitutions().size();
-            return map(match, MatchMatchStatsDTO.class);
         }
         throw new NotFoundException();
     }

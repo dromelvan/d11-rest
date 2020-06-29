@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface PlayerMatchStatRepository extends D11RestRepository<PlayerMatchStat> {
 
+    public PlayerMatchStats findByMatchId(@Param("matchId")Long matchId);
+    
     @Query("SELECT pms " + 
            "FROM PlayerMatchStat pms " + 
            "JOIN Match m ON m.id = pms.match.id " + 

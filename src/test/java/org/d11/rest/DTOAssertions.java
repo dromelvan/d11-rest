@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.d11.rest.api.collection.*;
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.service.mapper.*;
+import org.d11.rest.util.PlayerMatchStats;
 
 public class DTOAssertions {
 
@@ -400,6 +402,54 @@ public class DTOAssertions {
     public static void assertEqualsDTO(D11TeamTableStat d11TeamTableStat, D11TeamTableStatDTO d11TeamTableStatDTO) {
         assertEqualsDTO((TableStat) d11TeamTableStat, (TableStatDTO) d11TeamTableStatDTO);
         assertEqualsDTO(d11TeamTableStat.getD11Team(), d11TeamTableStatDTO.getD11Team());
+    }
+    
+    // Collections ------------------------------------------------------------------ //
+    
+    public static void assertEqualsDTO(PlayerMatchStats playerMatchStats, D11MatchPlayerMatchStatsDTO d11MatchPlayerMatchStatsDTO) {
+        assertNotNull(playerMatchStats);
+        assertNotNull(d11MatchPlayerMatchStatsDTO);
+        
+        int includedCount = 0;
+        int excludedCount = 0;
+        for(PlayerMatchStat playerMatchStat : playerMatchStats) {
+            if(playerMatchStat.getLineup() > 0) {
+                assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()));
+                assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName()));
+                for(PlayerMatchStatDTO playerMatchStatDTO : d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName())) {
+                    if(playerMatchStat.getId().equals(playerMatchStatDTO.getId())) {                    
+                        assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
+                        ++includedCount;
+                    }
+                }
+            } else {
+                ++excludedCount;
+            }
+        }
+        assertEquals(playerMatchStats.size() - excludedCount, includedCount);        
+    }
+    
+    public static void assertEqualsDTO(PlayerMatchStats playerMatchStats, MatchPlayerMatchStatsDTO matchPlayerMatchStatsDTO) {
+        assertNotNull(playerMatchStats);
+        assertNotNull(matchPlayerMatchStatsDTO);
+        
+        int includedCount = 0;
+        int excludedCount = 0;
+        for(PlayerMatchStat playerMatchStat : playerMatchStats) {
+            if(playerMatchStat.getLineup() > 0) {
+                assertNotNull(matchPlayerMatchStatsDTO.get(playerMatchStat.getTeam().getId()));
+                assertNotNull(matchPlayerMatchStatsDTO.get(playerMatchStat.getTeam().getId()).get(playerMatchStat.getPosition().getName()));
+                for(PlayerMatchStatDTO playerMatchStatDTO : matchPlayerMatchStatsDTO.get(playerMatchStat.getTeam().getId()).get(playerMatchStat.getPosition().getName())) {
+                    if(playerMatchStat.getId().equals(playerMatchStatDTO.getId())) {                    
+                        assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
+                        ++includedCount;
+                    }
+                }
+            } else {
+                ++excludedCount;
+            }
+        }
+        assertEquals(playerMatchStats.size() - excludedCount, includedCount);        
     }
     
 }

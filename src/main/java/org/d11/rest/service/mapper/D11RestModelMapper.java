@@ -9,9 +9,9 @@ import org.modelmapper.*;
 public class D11RestModelMapper extends ModelMapper {
 
     public D11RestModelMapper() {
-        final D11RestModelMapper modelMapper = this;
         addConverter(new LinksConverter());
-        // TODO: Try to make this work without passing the modelmapper to the converter.       
+        // TODO: Try to make this work without passing the modelmapper to the converter.
+        addConverter(new MatchPlayerMatchStatsConverter(this));   
         addConverter(new D11MatchPlayerMatchStatsConverter(this));               
 
         addMappings(new PropertyMap<PremierLeague, PremierLeagueDTO>() {
@@ -30,12 +30,6 @@ public class D11RestModelMapper extends ModelMapper {
                 // skip().setMatches(null);
                 using(new MatchesByDateConverter()).map(source.getMatches()).setMatches(null);
                 map(source.getPremierLeague().getSeason()).setSeason(null);
-            }
-        });
-        addMappings(new PropertyMap<Match, MatchMatchStatsDTO>() {
-            @Override
-            protected void configure() {
-                using(new MatchPlayerMatchStatsConverter(modelMapper)).map(source.getPlayerMatchStats()).setPlayerMatchStats(null);
             }
         });
         addMappings(new PropertyMap<D11League, D11LeagueDTO>() {
@@ -118,6 +112,16 @@ public class D11RestModelMapper extends ModelMapper {
                 skip().setPosition(null);
             }
         });
+        addMappings(new PropertyMap<PlayerMatchStatDTO, PlayerMatchStat>() {
+            @Override
+            protected void configure() {
+                skip().setPlayer(null);
+                skip().setMatch(null);
+                skip().setTeam(null);
+                skip().setD11Team(null);
+                skip().setPosition(null);
+            }
+        });        
         addMappings(new PropertyMap<GoalDTO, Goal>() {
             @Override
             protected void configure() {
