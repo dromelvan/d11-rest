@@ -15,11 +15,12 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.d11.rest.Tags;
+import org.d11.rest.api.collection.D11MatchPlayerMatchStatsDTO;
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.repository.PlayerMatchStatRepository;
 import org.d11.rest.service.mapper.*;
-import org.d11.rest.util.*;
+import org.d11.rest.util.PlayerMatchStats;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
@@ -58,10 +59,10 @@ public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMa
         playerMatchStats.addAll(getD11RestEntities());
         when(getRepositoryService().getJpaRepository().findByD11MatchId((long)1)).thenReturn(playerMatchStats);
         
-        PlayerMatchStatsByD11TeamIdPositionDTO result = getRepositoryService().findByD11MatchId((long)1);
+        D11MatchPlayerMatchStatsDTO result = getRepositoryService().findByD11MatchId((long)1);
         
         assertNotNull(result);
-        PlayerMatchStatsByD11TeamIdPositionDTO expected = new PlayerMatchStatsByD11TeamIdPositionConverter(new D11RestModelMapper()).convert(playerMatchStats);
+        D11MatchPlayerMatchStatsDTO expected = new D11MatchPlayerMatchStatsConverter(new D11RestModelMapper()).convert(playerMatchStats);
         assertEquals(expected.keySet(), result.keySet());
         for(Long d11TeamId : expected.keySet()) {
             assertEquals(expected.get(d11TeamId).keySet(), result.get(d11TeamId).keySet());

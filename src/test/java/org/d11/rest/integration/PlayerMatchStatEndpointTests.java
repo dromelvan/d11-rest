@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import java.util.*;
 
 import org.d11.rest.api.Endpoint;
+import org.d11.rest.api.collection.D11MatchPlayerMatchStatsDTO;
 import org.d11.rest.api.model.*;
 import org.d11.rest.controller.PlayerMatchStatController;
 import org.d11.rest.model.jpa.*;
@@ -78,18 +79,18 @@ public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<Player
         playerMatchStats = getRepository(PlayerMatchStatRepository.class).saveAll(playerMatchStats);
 
         MvcResult mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_D11_MATCH_ID, d11Match.getId()), token(user));
-        PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = readValue(mvcResult, new TypeReference<PlayerMatchStatsByD11TeamIdPositionDTO>() {});
+        D11MatchPlayerMatchStatsDTO d11MatchPlayerMatchStatsDTO = readValue(mvcResult, new TypeReference<D11MatchPlayerMatchStatsDTO>() {});
 
         PlayerMatchStats playerMatchStatsObject = new PlayerMatchStats();
         playerMatchStatsObject.addAll(playerMatchStats);        
-        PlayerMatchStatsByD11TeamIdPositionDTO expected = new PlayerMatchStatsByD11TeamIdPositionConverter(new D11RestModelMapper()).convert(playerMatchStatsObject);
+        D11MatchPlayerMatchStatsDTO expected = new D11MatchPlayerMatchStatsConverter(new D11RestModelMapper()).convert(playerMatchStatsObject);
 
-        assertEquals(expected.keySet(), playerMatchStatsByD11TeamIdPositionDTO.keySet());
+        assertEquals(expected.keySet(), d11MatchPlayerMatchStatsDTO.keySet());
         for(Long d11TeamId : expected.keySet()) {
-            assertEquals(expected.get(d11TeamId).keySet(), playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).keySet());
+            assertEquals(expected.get(d11TeamId).keySet(), d11MatchPlayerMatchStatsDTO.get(d11TeamId).keySet());
             for(String position : expected.get(d11TeamId).keySet()) {
                 List<PlayerMatchStatDTO> expectedPlayerMatchStatDTO = expected.get(d11TeamId).get(position);
-                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = playerMatchStatsByD11TeamIdPositionDTO.get(d11TeamId).get(position);
+                List<PlayerMatchStatDTO> resultPlayerMatchStatDTO = d11MatchPlayerMatchStatsDTO.get(d11TeamId).get(position);
                 for(int i = 0; i < expectedPlayerMatchStatDTO.size(); ++i) {
                     assertEquals(expectedPlayerMatchStatDTO.get(i).getId(), resultPlayerMatchStatDTO.get(i).getId());
                 }
@@ -97,8 +98,8 @@ public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<Player
         }    
         
         mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_D11_MATCH_ID, -1), token(user));
-        playerMatchStatsByD11TeamIdPositionDTO = readValue(mvcResult, new TypeReference<PlayerMatchStatsByD11TeamIdPositionDTO>() {});
-        assertTrue(playerMatchStatsByD11TeamIdPositionDTO.isEmpty());        
+        d11MatchPlayerMatchStatsDTO = readValue(mvcResult, new TypeReference<D11MatchPlayerMatchStatsDTO>() {});
+        assertTrue(d11MatchPlayerMatchStatsDTO.isEmpty());        
     }
 	
 }

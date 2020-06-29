@@ -3,7 +3,8 @@ package org.d11.rest.controller;
 import java.util.List;
 
 import org.d11.rest.api.Endpoint;
-import org.d11.rest.api.model.*;
+import org.d11.rest.api.collection.D11MatchPlayerMatchStatsDTO;
+import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
 import org.d11.rest.service.PlayerMatchStatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,9 @@ public class PlayerMatchStatController extends RepositoryController<PlayerMatchS
     }
 
     @GetMapping(Endpoint.PLAYER_MATCH_STAT_BY_D11_MATCH_ID)
-    public ResponseEntity<PlayerMatchStatsByD11TeamIdPositionDTO> findByD11MatchId(@PathVariable("id") long id) {
-        PlayerMatchStatsByD11TeamIdPositionDTO playerMatchStatsByD11TeamIdPositionDTO = getRepositoryService().findByD11MatchId(id);
-        return ResponseEntity.ok(playerMatchStatsByD11TeamIdPositionDTO);
+    public ResponseEntity<D11MatchPlayerMatchStatsDTO> findByD11MatchId(@PathVariable("id") long id) {
+        D11MatchPlayerMatchStatsDTO d11MatchPlayerMatchStatsDTO = getRepositoryService().findByD11MatchId(id);
+        return ResponseEntity.ok(d11MatchPlayerMatchStatsDTO);
     }
     
 }
