@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 public class MatchPlayerMatchStatsConverter extends PlayerMatchStatsConverter<MatchPlayerMatchStatsDTO> {
 
     public MatchPlayerMatchStatsConverter(ModelMapper modelMapper) {
-        super(modelMapper);
+        super(modelMapper, false);
     }
 
     protected MatchPlayerMatchStatsDTO createMap() {

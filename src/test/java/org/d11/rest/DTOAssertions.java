@@ -411,23 +411,18 @@ public class DTOAssertions {
         assertNotNull(playerMatchStats);
         assertNotNull(d11MatchPlayerMatchStatsDTO);
         
-        int includedCount = 0;
-        int excludedCount = 0;
+        int count = 0;
         for(PlayerMatchStat playerMatchStat : playerMatchStats) {
-            if(playerMatchStat.getLineup() > 0) {
-                assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()));
-                assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName()));
-                for(PlayerMatchStatDTO playerMatchStatDTO : d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName())) {
-                    if(playerMatchStat.getId().equals(playerMatchStatDTO.getId())) {                    
-                        assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
-                        ++includedCount;
-                    }
+            assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()));
+            assertNotNull(d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName()));
+            for(PlayerMatchStatDTO playerMatchStatDTO : d11MatchPlayerMatchStatsDTO.get(playerMatchStat.getD11Team().getId()).get(playerMatchStat.getPosition().getName())) {
+                if(playerMatchStat.getId().equals(playerMatchStatDTO.getId())) {                    
+                    assertEqualsDTO(playerMatchStat, playerMatchStatDTO);
+                    ++count;
                 }
-            } else {
-                ++excludedCount;
             }
         }
-        assertEquals(playerMatchStats.size() - excludedCount, includedCount);        
+        assertEquals(playerMatchStats.size(), count);        
     }
     
     public static void assertEqualsDTO(PlayerMatchStats playerMatchStats, MatchPlayerMatchStatsDTO matchPlayerMatchStatsDTO) {

@@ -12,24 +12,26 @@ import com.google.common.collect.ComparisonChain;
 public abstract class PlayerMatchStatsConverter<T extends Map<Long, Map<String, List<PlayerMatchStatDTO>>>> extends AbstractConverter<PlayerMatchStats, T> implements Comparator<PlayerMatchStat> {
     
     private ModelMapper modelMapper;
+    private boolean includeDidNotParticipate;
     
-    public PlayerMatchStatsConverter(ModelMapper modelMapper) {
+    public PlayerMatchStatsConverter(ModelMapper modelMapper, boolean includeDidNotParticipate) {
         this.modelMapper = modelMapper;
+        this.includeDidNotParticipate = includeDidNotParticipate;
     }
   
     @Override
     public T convert(PlayerMatchStats playerMatchStats) {
         Collections.sort(playerMatchStats, this);
         T map = createMap();
-        for (PlayerMatchStat playerMatchStat : playerMatchStats) {
-            if (playerMatchStat.getLineup() >= 0) {
+        for(PlayerMatchStat playerMatchStat : playerMatchStats) {
+            if(this.includeDidNotParticipate || playerMatchStat.getLineup() > 0) {
                 Map<String, List<PlayerMatchStatDTO>> positionMap = map.get(getRootKey(playerMatchStat));
-                if (positionMap == null) {
+                if(positionMap == null) {
                     positionMap = new LinkedHashMap<String, List<PlayerMatchStatDTO>>();
                     map.put(getRootKey(playerMatchStat), positionMap);
                 }
                 List<PlayerMatchStatDTO> positionList = positionMap.get(playerMatchStat.getPosition().getName());
-                if (positionList == null) {
+                if(positionList == null) {
                     positionList = new ArrayList<>();
                     positionMap.put(playerMatchStat.getPosition().getName(), positionList);
                 }
