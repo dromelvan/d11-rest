@@ -324,6 +324,7 @@ public class DTOAssertions {
 
     public static void assertEqualsDTO(PlayerMatchStat playerMatchStat, PlayerMatchStatDTO playerMatchStatDTO) {
         assertEqualsDTO(playerMatchStat, (PlayerMatchStatBaseDTO) playerMatchStatDTO);
+        assertEqualsDTO(playerMatchStat.getMatch(), playerMatchStatDTO.getMatch());
         assertEqualsDTO(playerMatchStat.getPlayer(), playerMatchStatDTO.getPlayer());
         assertEqualsDTO(playerMatchStat.getTeam(), playerMatchStatDTO.getTeam());
         assertEqualsDTO(playerMatchStat.getD11Team(), playerMatchStatDTO.getD11Team());

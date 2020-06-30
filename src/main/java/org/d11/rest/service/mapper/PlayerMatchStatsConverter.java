@@ -22,7 +22,7 @@ public abstract class PlayerMatchStatsConverter<T extends Map<Long, Map<String, 
         Collections.sort(playerMatchStats, this);
         T map = createMap();
         for (PlayerMatchStat playerMatchStat : playerMatchStats) {
-            if (playerMatchStat.getLineup() > 0) {
+            if (playerMatchStat.getLineup() >= 0) {
                 Map<String, List<PlayerMatchStatDTO>> positionMap = map.get(getRootKey(playerMatchStat));
                 if (positionMap == null) {
                     positionMap = new LinkedHashMap<String, List<PlayerMatchStatDTO>>();
