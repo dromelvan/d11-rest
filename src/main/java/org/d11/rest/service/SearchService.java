@@ -28,7 +28,7 @@ public class SearchService extends D11RestService {
             stringBuilder.append(Parameterizer.parameterize(string));
             stringBuilder.append("%");
         }        
-        logger.info("Performing search with search string {}.", stringBuilder);
+        logger.trace("Performing search with search string {}.", stringBuilder);
         
         List<Player> players = this.playerRepository.findByParameterizedNameLike(stringBuilder.toString());
         
