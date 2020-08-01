@@ -1,19 +1,11 @@
 package org.d11.rest.model.jpa;
 
-import java.text.Normalizer;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.d11.rest.api.util.Parameterizer;
 
 @Entity
 @Table(name = "players")
@@ -146,11 +138,8 @@ public class Player extends D11RestEntity {
     }
 
     private void updateParameterizedName() {
-        String parameterizedName = getName().toLowerCase();
-        parameterizedName = parameterizedName.replaceAll("['-]", " ");
-        parameterizedName = Normalizer.normalize(parameterizedName, Normalizer.Form.NFD);
-        parameterizedName = parameterizedName.replaceAll("[^a-z ]", "").trim();
-        parameterizedName = parameterizedName.replace(" ", "-");
+        String parameterizedName = Parameterizer.parameterize(getName());
         setParameterizedName(parameterizedName);
     }
+    
 }
