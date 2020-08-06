@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.d11.rest.api.model.*;
 import org.d11.rest.api.util.Parameterizer;
-import org.d11.rest.model.jpa.Player;
+import org.d11.rest.model.jpa.projection.PlayerSearchResult;
 import org.d11.rest.repository.PlayerRepository;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,10 @@ public class SearchService extends D11RestService {
         }        
         logger.trace("Performing search with search string {}.", stringBuilder);
         
-        List<Player> players = this.playerRepository.findByParameterizedNameLike(stringBuilder.toString());
+        List<PlayerSearchResult> players = this.playerRepository.findByParameterizedNameLike(stringBuilder.toString());
         
         SearchResultDTO searchResultDTO = new SearchResultDTO();
-        searchResultDTO.getPlayers().addAll(players.stream().map(player -> map(player, PlayerBaseDTO.class)).collect(Collectors.toList()));        
+        searchResultDTO.getPlayers().addAll(players.stream().map(player -> map(player, PlayerSearchResultDTO.class)).collect(Collectors.toList()));        
         return searchResultDTO;
     }
 }

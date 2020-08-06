@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
-import org.d11.rest.model.jpa.projection.EntityId;
+import org.d11.rest.model.jpa.projection.*;
 import org.d11.rest.security.Role;
 import org.d11.rest.util.JWT;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -125,6 +125,26 @@ public class D11RestMock {
             players.add(player(i + 1));
         }
         return players;
+    }
+    
+    public static PlayerSearchResult playerSearchResult(Player player, Team team) {
+        return new PlayerSearchResult() {
+            public Long getId() {
+                return player.getId();
+            }
+            
+            public String getName() {
+                return player.getName();
+            }
+
+            public Long getTeamId() {
+                return team.getId();
+            }
+
+            public String getTeamName() {
+                return team.getName();
+            }            
+        };
     }
 
     // Stadium -------------------------------------------------------------- //

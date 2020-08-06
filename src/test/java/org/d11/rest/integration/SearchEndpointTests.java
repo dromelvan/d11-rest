@@ -1,6 +1,5 @@
 package org.d11.rest.integration;
 
-import static org.d11.rest.DTOAssertions.assertEqualsDTO;
 import static org.d11.rest.model.D11RestMock.countries;
 import static org.d11.rest.model.D11RestMock.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,7 +64,10 @@ public class SearchEndpointTests extends IntegrationTests {
             SearchResultDTO searchResultDTO = readValue(mvcResult, SearchResultDTO.class);
             assertNotNull(searchResultDTO);
             assertEquals(1, searchResultDTO.getPlayers().size());
-            assertEqualsDTO(player, searchResultDTO.getPlayers().get(0));
+            assertEquals(player.getId(), searchResultDTO.getPlayers().get(0).getId());
+            assertEquals(player.getName(), searchResultDTO.getPlayers().get(0).getName());
+            assertEquals(1, searchResultDTO.getPlayers().get(0).getTeamId());
+            assertEquals("None", searchResultDTO.getPlayers().get(0).getTeamName());            
         }
         
         MvcResult mvcResult = assertOk(get(Endpoint.SEARCH, "player"));
