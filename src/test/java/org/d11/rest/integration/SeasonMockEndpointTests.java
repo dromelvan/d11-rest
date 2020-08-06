@@ -11,6 +11,7 @@ import static org.d11.rest.model.D11RestMock.goals;
 import static org.d11.rest.model.D11RestMock.matchDays;
 import static org.d11.rest.model.D11RestMock.matches;
 import static org.d11.rest.model.D11RestMock.playerMatchStats;
+import static org.d11.rest.model.D11RestMock.playerSeasonInfo;
 import static org.d11.rest.model.D11RestMock.players;
 import static org.d11.rest.model.D11RestMock.positions;
 import static org.d11.rest.model.D11RestMock.premierLeague;
@@ -69,6 +70,8 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
     @Autowired
     private PlayerRepository playerRepository;
     @Autowired
+    private PlayerSeasonInfoRepository playerSeasonInfoRepository;    
+    @Autowired
     private PositionRepository positionRepository;
     @Autowired
     private PlayerMatchStatRepository playerMatchStatRepository;
@@ -95,6 +98,7 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
         getJpaRepositories().add(this.teamRepository);
         getJpaRepositories().add(this.d11TeamRepository);
         getJpaRepositories().add(this.playerRepository);
+        getJpaRepositories().add(this.playerSeasonInfoRepository);
         getJpaRepositories().add(this.positionRepository);
         getJpaRepositories().add(this.playerMatchStatRepository);
         getJpaRepositories().add(this.teamTableStatRepository);
@@ -193,7 +197,7 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
             player.setCountry(countries.get(random.nextInt(countries.size())));
         }
         players = getRepository(PlayerRepository.class).saveAll(players);
-
+        
         for(Match match : matches) {
             List<Goal> goals = goals(random.nextInt(4) + 1);
             for(Goal goal : goals) {
@@ -238,6 +242,21 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
         }
         playerMatchStats = getRepository(PlayerMatchStatRepository.class).saveAll(playerMatchStats);
 
+        List<PlayerSeasonInfo> playerSeasonInfos = new ArrayList<PlayerSeasonInfo>();
+        for(Player player : players) {
+            for(Season season : seasons) {
+                PlayerSeasonInfo playerSeasonInfo = playerSeasonInfo();
+                playerSeasonInfo.setPlayer(player);
+                playerSeasonInfo.setSeason(season);                
+                playerSeasonInfo.setTeam(teams.get(random.nextInt(teams.size())));
+                playerSeasonInfo.setD11Team(d11Teams.get(random.nextInt(d11Teams.size())));
+                playerSeasonInfo.setPosition(positions.get(random.nextInt(positions.size())));
+                playerSeasonInfo.setValue(random.nextInt(100) * 5);
+                playerSeasonInfos.add(playerSeasonInfo);
+            }
+        }
+        playerSeasonInfos = getRepository(PlayerSeasonInfoRepository.class).saveAll(playerSeasonInfos);
+        
         List<TeamTableStat> teamTableStats = teamTableStats();
         for(TeamTableStat teamTableStat : teamTableStats) {
             teamTableStat.setId(null);

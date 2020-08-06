@@ -22,6 +22,8 @@ public class DTOAssertions {
             assertEqualsDTO((Player) d11RestEntity, (PlayerDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof Player && d11RestApiDTO instanceof PlayerBaseDTO) {
             assertEqualsDTO((Player) d11RestEntity, (PlayerBaseDTO) d11RestApiDTO);
+        } else if(d11RestEntity instanceof PlayerSeasonInfo && d11RestApiDTO instanceof PlayerSeasonInfoDTO) {
+            assertEqualsDTO((PlayerSeasonInfo) d11RestEntity, (PlayerSeasonInfoDTO) d11RestApiDTO);            
         } else if(d11RestEntity instanceof Position && d11RestApiDTO instanceof PositionDTO) {
             assertEqualsDTO((Position) d11RestEntity, (PositionDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof Team && d11RestApiDTO instanceof TeamDTO) {
@@ -128,6 +130,16 @@ public class DTOAssertions {
         assertEquals(player.getParameterizedName(), playerDTO.getParameterizedName());
     }
 
+    public static void assertEqualsDTO(PlayerSeasonInfo playerSeasonInfo, PlayerSeasonInfoDTO playerSeasonInfoDTO) {
+        assertEquals(playerSeasonInfo.getId(), playerSeasonInfoDTO.getId());
+        assertEqualsDTO(playerSeasonInfo.getPlayer(), playerSeasonInfoDTO.getPlayer());
+        assertEqualsDTO(playerSeasonInfo.getSeason(), playerSeasonInfoDTO.getSeason());
+        assertEqualsDTO(playerSeasonInfo.getTeam(), playerSeasonInfoDTO.getTeam());
+        assertEqualsDTO(playerSeasonInfo.getD11Team(), playerSeasonInfoDTO.getD11Team());
+        assertEqualsDTO(playerSeasonInfo.getPosition(), playerSeasonInfoDTO.getPosition());        
+        assertEquals(playerSeasonInfo.getValue(), playerSeasonInfoDTO.getValue());
+    }
+    
     public static void assertEqualsDTO(Position position, PositionDTO positionDTO) {
         assertNotNull(positionDTO);
         assertEquals(position.getId(), positionDTO.getId());
