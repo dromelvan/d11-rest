@@ -28,7 +28,7 @@ public class PlayerSeasonInfo extends D11RestEntity {
     @NotNull
     private Position position;
     @NotNull
-    @Min(0)
+    @PositiveOrZero
     private Integer value;
     
     protected PlayerSeasonInfo() {}

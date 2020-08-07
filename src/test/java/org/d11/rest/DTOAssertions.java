@@ -23,7 +23,9 @@ public class DTOAssertions {
         } else if(d11RestEntity instanceof Player && d11RestApiDTO instanceof PlayerBaseDTO) {
             assertEqualsDTO((Player) d11RestEntity, (PlayerBaseDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof PlayerSeasonInfo && d11RestApiDTO instanceof PlayerSeasonInfoDTO) {
-            assertEqualsDTO((PlayerSeasonInfo) d11RestEntity, (PlayerSeasonInfoDTO) d11RestApiDTO);            
+            assertEqualsDTO((PlayerSeasonInfo) d11RestEntity, (PlayerSeasonInfoDTO) d11RestApiDTO);                        
+        } else if(d11RestEntity instanceof PlayerSeasonStat && d11RestApiDTO instanceof PlayerSeasonStatDTO) {
+            assertEqualsDTO((PlayerSeasonStat) d11RestEntity, (PlayerSeasonStatDTO) d11RestApiDTO);                        
         } else if(d11RestEntity instanceof Position && d11RestApiDTO instanceof PositionDTO) {
             assertEqualsDTO((Position) d11RestEntity, (PositionDTO) d11RestApiDTO);
         } else if(d11RestEntity instanceof Team && d11RestApiDTO instanceof TeamDTO) {
@@ -138,6 +140,32 @@ public class DTOAssertions {
         assertEqualsDTO(playerSeasonInfo.getD11Team(), playerSeasonInfoDTO.getD11Team());
         assertEqualsDTO(playerSeasonInfo.getPosition(), playerSeasonInfoDTO.getPosition());        
         assertEquals(playerSeasonInfo.getValue(), playerSeasonInfoDTO.getValue());
+    }
+
+    public static void assertEqualsDTO(PlayerSeasonStat playerSeasonStat, PlayerSeasonStatDTO playerSeasonStatDTO) {
+        assertEquals(playerSeasonStat.getId(), playerSeasonStatDTO.getId());
+        assertEqualsDTO(playerSeasonStat.getPlayer(), playerSeasonStatDTO.getPlayer());
+        assertEqualsDTO(playerSeasonStat.getSeason(), playerSeasonStatDTO.getSeason());
+        assertEquals(playerSeasonStat.getGoals(), playerSeasonStatDTO.getGoals());
+        assertEquals(playerSeasonStat.getGoalAssists(), playerSeasonStatDTO.getGoalAssists());
+        assertEquals(playerSeasonStat.getOwnGoals(), playerSeasonStatDTO.getOwnGoals());
+        assertEquals(playerSeasonStat.getGoalsConceded(), playerSeasonStatDTO.getGoalsConceded());
+        assertEquals(playerSeasonStat.getRating(), playerSeasonStatDTO.getRating());
+        assertEquals(playerSeasonStat.getPoints(), playerSeasonStatDTO.getPoints());
+        assertEquals(playerSeasonStat.getCleanSheets(), playerSeasonStatDTO.getCleanSheets());
+        assertEquals(playerSeasonStat.getYellowCards(), playerSeasonStatDTO.getYellowCards());
+        assertEquals(playerSeasonStat.getRedCards(), playerSeasonStatDTO.getRedCards());
+        assertEquals(playerSeasonStat.getManOfTheMatch(), playerSeasonStatDTO.getManOfTheMatch());
+        assertEquals(playerSeasonStat.getSharedManOfTheMatch(), playerSeasonStatDTO.getSharedManOfTheMatch());
+        assertEquals(playerSeasonStat.getGamesStarted(), playerSeasonStatDTO.getGamesStarted());
+        assertEquals(playerSeasonStat.getGamesSubstitute(), playerSeasonStatDTO.getGamesSubstitute());
+        assertEquals(playerSeasonStat.getGamesDidNotParticipate(), playerSeasonStatDTO.getGamesDidNotParticipate());
+        assertEquals(playerSeasonStat.getSubstitutionsOn(), playerSeasonStatDTO.getSubstitutionsOn());
+        assertEquals(playerSeasonStat.getSubstitutionsOff(), playerSeasonStatDTO.getSubstitutionsOff());
+        assertEquals(playerSeasonStat.getMinutesPlayed(), playerSeasonStatDTO.getMinutesPlayed());        
+        assertEquals(playerSeasonStat.getFormPoints(), playerSeasonStatDTO.getFormPoints());
+        assertEquals(playerSeasonStat.getPointsPerAppearance(), playerSeasonStatDTO.getPointsPerAppearance());
+        assertEquals(playerSeasonStat.getRanking(), playerSeasonStatDTO.getRanking());                
     }
     
     public static void assertEqualsDTO(Position position, PositionDTO positionDTO) {

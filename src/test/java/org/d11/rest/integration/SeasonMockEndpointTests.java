@@ -12,6 +12,7 @@ import static org.d11.rest.model.D11RestMock.matchDays;
 import static org.d11.rest.model.D11RestMock.matches;
 import static org.d11.rest.model.D11RestMock.playerMatchStats;
 import static org.d11.rest.model.D11RestMock.playerSeasonInfo;
+import static org.d11.rest.model.D11RestMock.playerSeasonStat;
 import static org.d11.rest.model.D11RestMock.players;
 import static org.d11.rest.model.D11RestMock.positions;
 import static org.d11.rest.model.D11RestMock.premierLeague;
@@ -70,8 +71,10 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
     @Autowired
     private PlayerRepository playerRepository;
     @Autowired
-    private PlayerSeasonInfoRepository playerSeasonInfoRepository;    
+    private PlayerSeasonInfoRepository playerSeasonInfoRepository;
     @Autowired
+    private PlayerSeasonStatRepository playerSeasonStatRepository;        
+    @Autowired    
     private PositionRepository positionRepository;
     @Autowired
     private PlayerMatchStatRepository playerMatchStatRepository;
@@ -99,6 +102,7 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
         getJpaRepositories().add(this.d11TeamRepository);
         getJpaRepositories().add(this.playerRepository);
         getJpaRepositories().add(this.playerSeasonInfoRepository);
+        getJpaRepositories().add(this.playerSeasonStatRepository);
         getJpaRepositories().add(this.positionRepository);
         getJpaRepositories().add(this.playerMatchStatRepository);
         getJpaRepositories().add(this.teamTableStatRepository);
@@ -256,6 +260,17 @@ public abstract class SeasonMockEndpointTests<T extends D11RestEntity, U extends
             }
         }
         playerSeasonInfos = getRepository(PlayerSeasonInfoRepository.class).saveAll(playerSeasonInfos);
+
+        List<PlayerSeasonStat> playerSeasonStats = new ArrayList<PlayerSeasonStat>();
+        for(Player player : players) {
+            for(Season season : seasons) {
+                PlayerSeasonStat playerSeasonStat = playerSeasonStat();
+                playerSeasonStat.setPlayer(player);
+                playerSeasonStat.setSeason(season);                
+                playerSeasonStats.add(playerSeasonStat);
+            }
+        }
+        playerSeasonStats = getRepository(PlayerSeasonStatRepository.class).saveAll(playerSeasonStats);
         
         List<TeamTableStat> teamTableStats = teamTableStats();
         for(TeamTableStat teamTableStat : teamTableStats) {

@@ -170,6 +170,30 @@ public class D11RestMock {
         }
         return playerSeasonInfos;
     }
+
+    // PlayerSeasonStat ----------------------------------------------------- //
+    
+    public static PlayerSeasonStat playerSeasonStat() {
+        return playerSeasonStat(1);
+    }
+
+    public static PlayerSeasonStat playerSeasonStat(int id) {
+        PlayerSeasonStat playerSeasonStat = new PlayerSeasonStat(id, id, id, id, id, id, id, id, id, id, id, id, id, id, id, id, id, id, id, id);
+        playerSeasonStat.setId((long) id);
+        return playerSeasonStat;
+    }
+
+    public static List<PlayerSeasonStat> playerSeasonStats() {
+        return playerSeasonStats(2);
+    }
+
+    public static List<PlayerSeasonStat> playerSeasonStats(int count) {
+        List<PlayerSeasonStat> playerSeasonStats = new ArrayList<>();
+        for(int i = 0; i < count; ++i) {
+            playerSeasonStats.add(playerSeasonStat(i + 1));
+        }
+        return playerSeasonStats;
+    }
     
     // Stadium -------------------------------------------------------------- //
 
