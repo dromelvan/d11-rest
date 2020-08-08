@@ -1,19 +1,23 @@
 package org.d11.rest.service;
 
+import static org.d11.rest.DTOAssertions.assertEqualsDTO;
 import static org.d11.rest.model.D11RestMock.d11Team;
 import static org.d11.rest.model.D11RestMock.player;
 import static org.d11.rest.model.D11RestMock.playerSeasonInfos;
 import static org.d11.rest.model.D11RestMock.position;
 import static org.d11.rest.model.D11RestMock.season;
 import static org.d11.rest.model.D11RestMock.team;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import java.util.List;
+import java.util.*;
 
 import org.d11.rest.Tags;
 import org.d11.rest.api.model.PlayerSeasonInfoDTO;
 import org.d11.rest.model.jpa.PlayerSeasonInfo;
 import org.d11.rest.repository.PlayerSeasonInfoRepository;
+import org.d11.rest.util.NotFoundException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
@@ -38,5 +42,17 @@ public class PlayerSeasonInfoServiceTests extends RepositoryServiceTests<PlayerS
         
         super.beforeAll();
     }   
+    
+    @Test
+    public void findByPlayerIdAndSeasonId() {
+        PlayerSeasonInfo playerSeasonInfo = getD11RestEntities().get(0);
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndSeasonId((long)1, (long)1)).thenReturn(Optional.of(playerSeasonInfo));
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndSeasonId((long)0, (long)0)).thenReturn(Optional.empty());
+        
+        PlayerSeasonInfoDTO playerSeasonInfoDTO = getRepositoryService().findByPlayerIdAndSeasonId(1, 1);
+        assertEqualsDTO(playerSeasonInfo, playerSeasonInfoDTO);
+        
+        assertThrows(NotFoundException.class, () -> getRepositoryService().findByPlayerIdAndSeasonId(0, 0));
+    }
     
 }

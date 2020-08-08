@@ -32,5 +32,11 @@ public class PlayerSeasonInfoController extends RepositoryController<PlayerSeaso
     public ResponseEntity<PlayerSeasonInfoDTO> findById(@PathVariable("id") long id) {
         return super.findById(id);
     }
+
+    @GetMapping(Endpoint.PLAYER_SEASON_INFO_BY_PLAYER_ID_AND_SEASON_ID)
+    public ResponseEntity<PlayerSeasonInfoDTO> findByPlayerIdAndSeasonId(@PathVariable("playerId") long playerId, @PathVariable("seasonId") long seasonId) {
+        PlayerSeasonInfoDTO playerSeasonInfoDTO = getRepositoryService().findByPlayerIdAndSeasonId(playerId, seasonId);
+        return ResponseEntity.ok(playerSeasonInfoDTO);
+    }
     
 }
