@@ -123,8 +123,7 @@ public class DTOAssertions {
 
     public static void assertEqualsDTO(Player player, PlayerDTO playerDTO) {
         assertEqualsDTO(player, (PlayerBaseDTO) playerDTO);
-        assertEquals(player.getCountry().getId(), playerDTO.getCountryId());
-        assertEquals(player.getCountry().getName(), playerDTO.getCountryName());
+        assertEqualsDTO(player.getCountry(), playerDTO.getCountry());
         assertEquals(player.getWhoScoredId(), playerDTO.getWhoScoredId());
         assertEquals(player.getDateOfBirth(), playerDTO.getDateOfBirth());
         assertEquals(player.getHeight(), playerDTO.getHeight());
