@@ -1,7 +1,9 @@
 package org.d11.rest.service;
 
+import java.util.List;
+
 import org.d11.rest.api.collection.*;
-import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
+import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.PlayerMatchStat;
 import org.d11.rest.repository.PlayerMatchStatRepository;
 import org.d11.rest.util.PlayerMatchStats;
@@ -24,6 +26,11 @@ public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, P
     public D11MatchPlayerMatchStatsDTO findByD11MatchId(long d11MatchId) {
         PlayerMatchStats playerMatchStats = getJpaRepository().findByD11MatchId(d11MatchId);
         return map(playerMatchStats, D11MatchPlayerMatchStatsDTO.class);
+    }
+
+    public List<PlayerMatchStatDTO> findByPlayerIdAndSeasonId(long playerId, long seasonId) {
+        List<PlayerMatchStat> playerMatchStats = getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId(playerId, seasonId);
+        return map(playerMatchStats, PlayerMatchStatDTO.class);
     }
     
     @Override

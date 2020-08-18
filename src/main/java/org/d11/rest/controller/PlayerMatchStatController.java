@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.d11.rest.api.Endpoint;
 import org.d11.rest.api.collection.*;
-import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
+import org.d11.rest.api.model.*;
 import org.d11.rest.service.PlayerMatchStatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +44,12 @@ public class PlayerMatchStatController extends RepositoryController<PlayerMatchS
     public ResponseEntity<D11MatchPlayerMatchStatsDTO> findByD11MatchId(@PathVariable("id") long id) {
         D11MatchPlayerMatchStatsDTO d11MatchPlayerMatchStatsDTO = getRepositoryService().findByD11MatchId(id);
         return ResponseEntity.ok(d11MatchPlayerMatchStatsDTO);
+    }
+
+    @GetMapping(Endpoint.PLAYER_MATCH_STAT_BY_PLAYER_ID_AND_SEASON_ID)
+    public ResponseEntity<List<PlayerMatchStatDTO>> findByPlayerIdAndSeasonId(@PathVariable("playerId") long playerId, @PathVariable("seasonId") long seasonId) {
+        List<PlayerMatchStatDTO> playerMatchStatDTOs = getRepositoryService().findByPlayerIdAndSeasonId(playerId, seasonId);
+        return ResponseEntity.ok(playerMatchStatDTOs);
     }
     
 }

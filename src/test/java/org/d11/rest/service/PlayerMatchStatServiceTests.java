@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
+import java.util.*;
 
 import org.d11.rest.Tags;
 import org.d11.rest.api.collection.*;
-import org.d11.rest.api.model.PlayerMatchStatBaseDTO;
+import org.d11.rest.api.model.*;
 import org.d11.rest.model.jpa.*;
 import org.d11.rest.repository.PlayerMatchStatRepository;
 import org.d11.rest.util.PlayerMatchStats;
@@ -79,5 +79,18 @@ public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMa
         result = getRepositoryService().findByD11MatchId((long)-1);
         assertTrue(result.isEmpty());
     }
-	
+
+    @Test
+    public void findByPlayerIdAndSeasonId() {
+        List<PlayerMatchStat> playerMatchStats = new ArrayList<PlayerMatchStat>(getD11RestEntities());
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId((long)1, (long)1)).thenReturn(playerMatchStats);
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId((long)-1, (long)-1)).thenReturn(new ArrayList<PlayerMatchStat>());
+                
+        List<PlayerMatchStatDTO> result = getRepositoryService().findByPlayerIdAndSeasonId((long)1, (long)1);
+        assertEqualsDTO(playerMatchStats, result);
+                
+        result = getRepositoryService().findByPlayerIdAndSeasonId((long)-1, (long)-1);
+        assertTrue(result.isEmpty());
+    }
+    
 }

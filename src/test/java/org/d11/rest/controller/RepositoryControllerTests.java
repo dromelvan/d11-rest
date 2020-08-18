@@ -61,7 +61,7 @@ public abstract class RepositoryControllerTests<T extends D11RestEntity, U exten
 				.map(entity -> map(entity))
 				.collect(Collectors.toList());
 	}
-	
+
 	protected abstract Class<U> getDTOClass();
 
 	protected <S> S map(T entity, Class<S> clazz) {
