@@ -23,6 +23,6 @@ public interface PlayerMatchStatRepository extends D11RestRepository<PlayerMatch
            "ORDER BY p.sortOrder")
     public PlayerMatchStats findByD11MatchId(@Param("d11MatchId")Long d11MatchId);
     
-    public List<PlayerMatchStat> findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId(@Param("playerId")Long playerId, @Param("seasonId")Long seasonId);
+    public List<PlayerMatchStat> findByPlayerIdAndMatchMatchDayPremierLeagueSeasonIdOrderByMatchDatetime(@Param("playerId")Long playerId, @Param("seasonId")Long seasonId);
     
 }

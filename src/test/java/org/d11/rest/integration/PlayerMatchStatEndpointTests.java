@@ -1,6 +1,8 @@
 package org.d11.rest.integration;
 
 import static org.d11.rest.DTOAssertions.assertEqualsDTO;
+import static org.d11.rest.model.D11RestMock.player;
+import static org.d11.rest.model.D11RestMock.playerMatchStat;
 import static org.d11.rest.model.D11RestMock.playerMatchStats;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -124,33 +126,43 @@ public class PlayerMatchStatEndpointTests extends SeasonMockEndpointTests<Player
     @Test
     public void findByPlayerIdAndSeasonId() throws Exception {
         Random random = new Random(System.currentTimeMillis());
-        
         User user = getRepository(UserRepository.class).findAll().get(0);
-        MatchDay matchDay = getRepository(MatchDayRepository.class).findAll().get(0);
-        Match match = matchDay.getMatches().get(0);
-        D11MatchDay d11MatchDay = matchDay.getD11MatchDay();
-        D11Match d11Match = d11MatchDay.getD11Matches().get(0);
-        Player player = getRepository(PlayerRepository.class).findAll().get(0);
+        Map<Season, List<PlayerMatchStat>> map = new HashMap<>();
+        List<Season> seasons = getRepository(SeasonRepository.class).findAll();
+        List<Country> countries = getRepository(CountryRepository.class).findAll();
+        Player player = player();
+        player.setId(null);
+        player.setCountry(countries.get(random.nextInt(countries.size())));
+        player = getRepository(PlayerRepository.class).save(player);
+        
         List<Position> positions = getRepository(PositionRepository.class).findAll();
-
-        List<PlayerMatchStat> playerMatchStats = playerMatchStats();
-        for(PlayerMatchStat playerMatchStat : playerMatchStats) {
-            playerMatchStat.setId(null);
-            playerMatchStat.setPlayer(player);
-            match.addPlayerMatchStat(playerMatchStat);
-            playerMatchStat.setTeam(random.nextInt(2) == 0 ? match.getHomeTeam() : match.getAwayTeam());
-            playerMatchStat.setD11Team(random.nextInt(2) == 0 ? d11Match.getHomeD11Team() : d11Match.getAwayD11Team());
-            playerMatchStat.setPosition(positions.get(random.nextInt(positions.size())));
+        
+        for(Season season : seasons) {
+            map.put(season, new ArrayList<PlayerMatchStat>());
+            for(MatchDay matchDay : season.getPremierLeague().getMatchDays()) {
+                PlayerMatchStat playerMatchStat = playerMatchStat();
+                Match match = matchDay.getMatches().get(0);
+                D11MatchDay d11MatchDay = matchDay.getD11MatchDay();
+                D11Match d11Match = d11MatchDay.getD11Matches().get(0);
+                
+                playerMatchStat.setId(null);
+                playerMatchStat.setPlayer(player);
+                match.addPlayerMatchStat(playerMatchStat);
+                playerMatchStat.setTeam(random.nextInt(2) == 0 ? match.getHomeTeam() : match.getAwayTeam());
+                playerMatchStat.setD11Team(random.nextInt(2) == 0 ? d11Match.getHomeD11Team() : d11Match.getAwayD11Team());
+                playerMatchStat.setPosition(positions.get(random.nextInt(positions.size())));
+                playerMatchStat = getRepository(PlayerMatchStatRepository.class).save(playerMatchStat);
+                map.get(season).add(playerMatchStat);
+            }
         }
-        playerMatchStats = getRepository(PlayerMatchStatRepository.class).saveAll(playerMatchStats);
-        
-        MvcResult mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_PLAYER_ID_AND_SEASON_ID, player.getId(), matchDay.getPremierLeague().getSeason().getId()), token(user));
+
+        for(Season season : seasons) {
+            MvcResult mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_PLAYER_ID_AND_SEASON_ID, player.getId(), season.getId()), token(user));
+            List<PlayerMatchStatDTO> result = readValue(mvcResult, new TypeReference<List<PlayerMatchStatDTO>>() {});
+            assertEqualsDTO(map.get(season), result);
+        }
+        MvcResult mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_PLAYER_ID_AND_SEASON_ID, player.getId(), -1), token(user));
         List<PlayerMatchStatDTO> result = readValue(mvcResult, new TypeReference<List<PlayerMatchStatDTO>>() {});
-        
-        assertEqualsDTO(playerMatchStats, result);
-        
-        mvcResult = assertOk(get(Endpoint.PLAYER_MATCH_STAT_BY_PLAYER_ID_AND_SEASON_ID, -1, -1), token(user));
-        result = readValue(mvcResult, new TypeReference<List<PlayerMatchStatDTO>>() {});
         assertTrue(result.isEmpty());                
     }
     

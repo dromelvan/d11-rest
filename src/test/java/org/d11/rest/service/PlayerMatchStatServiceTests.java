@@ -83,8 +83,8 @@ public class PlayerMatchStatServiceTests extends RepositoryServiceTests<PlayerMa
     @Test
     public void findByPlayerIdAndSeasonId() {
         List<PlayerMatchStat> playerMatchStats = new ArrayList<PlayerMatchStat>(getD11RestEntities());
-        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId((long)1, (long)1)).thenReturn(playerMatchStats);
-        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId((long)-1, (long)-1)).thenReturn(new ArrayList<PlayerMatchStat>());
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonIdOrderByMatchDatetime((long)1, (long)1)).thenReturn(playerMatchStats);
+        when(getRepositoryService().getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonIdOrderByMatchDatetime((long)-1, (long)-1)).thenReturn(new ArrayList<PlayerMatchStat>());
                 
         List<PlayerMatchStatDTO> result = getRepositoryService().findByPlayerIdAndSeasonId((long)1, (long)1);
         assertEqualsDTO(playerMatchStats, result);

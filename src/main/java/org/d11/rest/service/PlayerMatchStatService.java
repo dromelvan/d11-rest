@@ -29,7 +29,7 @@ public class PlayerMatchStatService extends RepositoryService<PlayerMatchStat, P
     }
 
     public List<PlayerMatchStatDTO> findByPlayerIdAndSeasonId(long playerId, long seasonId) {
-        List<PlayerMatchStat> playerMatchStats = getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonId(playerId, seasonId);
+        List<PlayerMatchStat> playerMatchStats = getJpaRepository().findByPlayerIdAndMatchMatchDayPremierLeagueSeasonIdOrderByMatchDatetime(playerId, seasonId);
         return map(playerMatchStats, PlayerMatchStatDTO.class);
     }
     
